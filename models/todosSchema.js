@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TaskSchema = new Schema({
-  name: {
+  todoItem: {
     type: String,
   },
   Created_date: {
