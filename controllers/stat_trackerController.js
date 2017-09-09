@@ -1,54 +1,58 @@
-var mongoose = require('mongoose'),
-  Task = mongoose.model('Tasks')
-// module.exports = mongoose.model('Tasks', TaskSchema) << from todosSchema.js
+const mongoose = require('mongoose'),
+  Exercise = mongoose.model('Exercise')
+// module.exports = mongoose.model('Exercise', ExerciseSchema) << from exerciseSchema.js
 
-exports.list_all_tasks = function(req, res) {
-  Task.find({}, function(err, task) {
-    if (err)
+exports.list_all_exercises = function (req, res) {
+  Exercise.find({}, function (err, exercise) {
+    if (err) {
       res.send(err)
-    res.json(task)
+    }
+    res.json(exercise)
   })
 }
 
-
-
-
-exports.create_a_task = function(req, res) {
-  var new_task = new Task(req.body)
-  new_task.save(function(err, task) {
-    if (err)
+exports.create_a_new_exercise_log = function (req, res) {
+  var newExercise = new Exercise(req.body)
+  newExercise.save(function (err, exercise) {
+    if (err) {
       res.send(err)
-    res.json(task)
+    }
+    res.json(exercise)
   })
 }
 
-
-exports.read_a_task = function(req, res) {
-  Task.findById(req.params.taskId, function(err, task) {
-    if (err)
+exports.read_an_exercise = function (req, res) {
+  Exercise.findById(req.params.id, function (err, exercise) {
+    if (err) {
       res.send(err)
-    res.json(task)
+    }
+    res.json(exercise)
   })
 }
 
-
-exports.update_a_task = function(req, res) {
-  Task.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-    if (err)
+exports.update_an_exercise = function (req, res) {
+  Exercise.findOneAndUpdate ({_id: req.params.id}, req.body, {new: true}, function (err, exercise) {
+    if (err) {
       res.send(err)
-    res.json(task)
+    }
+    res.json(exercise)
   })
 }
 
-
-exports.delete_a_task = function(req, res) {
-
-
-  Task.remove({
-    _id: req.params.taskId
-  }, function(err, task) {
-    if (err)
+exports.delete_an_exercise = function (req, res) {
+  Exercise.remove({ _id: req.params.id }, function (err, exercise) {
+    if (err) {
       res.send(err)
+    }
     res.json({ message: 'Task successfully deleted' })
+  })
+}
+
+exports.delete_daily_stats = function (req, res) {
+  Exercise.remove({ create_date: req.params.create_date }, function (err, exercise) {
+    if (err) {
+      res.send(err)
+    }
+    res.json({ message: 'Daily activities successfully deleted' })
   })
 }
