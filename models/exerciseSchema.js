@@ -27,8 +27,10 @@ const exerciseSchema = ({
   sets: {
     type: Number
   },
-  create_date:
-    'Moment'
+  created_date: {
+     type: Date,
+     default: Date.now
+   },
 })
 
 module.exports = mongoose.model('Exercise', exerciseSchema)

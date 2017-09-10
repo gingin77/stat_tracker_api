@@ -115,17 +115,16 @@ router.route('/activities/:id')
 // console.log(tommorrow)  moment("2017-09-11T00:00:00.000")
 // console.log(yesterday)  moment("2017-09-09T00:00:00.000")
 
-router.route('/activities/bydate')
+router.route('/activities/bydate/created_date')
   .get(function (req, res) {
+    const updatedDate = tommorrow
     // console.log(req.params.dateid)
     // console.log(typeof req.params.dateid)
     // let convertedDate = req.params.dateid.toString
     // console.log(convertedDate)
       // Exercise.find({
       //   create_date: {"$regex": req.params.dateid}})
-    Exercise.find({
-      'create_date': {'$gte': '1505017384546'}
-    })
+    Exercise.find({created_date: req.params.created_date},{$set: {created_date: updatedDate}})
       .then(function (exercise) {
         res.json(exercise)
       })
