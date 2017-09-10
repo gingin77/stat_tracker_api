@@ -56,7 +56,31 @@ router.route('/activities/:id')
             response = {'error' : false,'message' : data}
         }
       })
+    })
 
+    .put(function (req, res) {
+      const updatedActivity = {
+        exercise_activity: req.body.exercise_activity,
+        distance_miles: req.body.distance_miles,
+        mins_per_mile: req.body.mins_per_mile,
+        weight_level_lbs: req.body.weight_level_lbs,
+        reps: req.body.reps,
+        sets: req.body.sets,
+        create_date: req.body.create_date
+      }
+      console.log(updatedActivity)
+
+      Exercise.updateOne({_id: req.params.id}, updatedActivity)
+        .then(function(exercise) {
+          res.json(exercise)
+        })
+        .catch(function (err) {
+          if(err) {
+              response = {'error' : true,'message' : 'Error fetching data'};
+          } else {
+              response = {'error' : false,'message' : data}
+          }
+        })
     })
 
 
