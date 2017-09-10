@@ -26,7 +26,7 @@ const exerciseSchema = ({
     type: Number
   },
   create_date: {
-    type: Date.toDateString,
+    type: Date,
     default: Date.now
   }
 })

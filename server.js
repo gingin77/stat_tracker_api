@@ -55,6 +55,7 @@ router.route('/activities/:id')
       Exercise.findOne({_id: req.params.id})
       .then(function(exercise) {
         res.json(exercise)
+        console.log(typeof req.body.create_date);
       })
       .catch(function (err) {
         if(err) {
@@ -114,15 +115,14 @@ router.route('/activities/:id')
 // console.log(tommorrow)  moment("2017-09-11T00:00:00.000")
 // console.log(yesterday)  moment("2017-09-09T00:00:00.000")
 
-router.route('/activities/exercise/:exercise_activity')
+router.route('/activities/bydate/:YYYY-MM-DD')
   .get(function (req, res) {
-    console.log(req.params.exercise_activity)
-      Exercise.find({exercise_activity: req.params.exercise_activity},
-         {$set:
-           {create_date: req.body.create_date.toString() }
-       })
+    console.log(req.params.YYYY-MM-DD)
+      Exercise.find({
+        create_date: {
+          $gte: req.params.YYYY-MM-DD
+        }})
       .then(function (exercise) {
-        console.log(req.body.create_date)
         res.json(exercise)
       })
       .catch(function (err) {
