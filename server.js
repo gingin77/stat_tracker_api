@@ -69,7 +69,6 @@ router.route('/activities/:id')
         create_date: req.body.create_date
       }
       console.log(updatedActivity)
-
       Exercise.updateOne({_id: req.params.id}, updatedActivity)
         .then(function(exercise) {
           res.json(exercise)
@@ -82,6 +81,20 @@ router.route('/activities/:id')
           }
         })
     })
+    .delete(function (req, res) {
+        Exercise.findByIdAndRemove({_id: req.params.id})
+        .then(function(exercise) {
+          res.json(exercise)
+        })
+        .catch(function (err) {
+          if(err) {
+              response = {'error' : true,'message' : 'Error fetching data'};
+          } else {
+              response = {'error' : false,'message' : data}
+          }
+        })
+    })
+
 
 
 app.use('/', router)
