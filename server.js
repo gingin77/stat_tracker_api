@@ -137,6 +137,24 @@ router.route('/activities/bydate/created_date')
     })
   })
 
+router.route('/activities/bydate/:date')
+  .delete(function (req, res) {
+    // const datetoDelete = tommorrow
+
+    Exercise.remove({created_date: req.params.date})
+    // ({created_date: { "$regex": req.params.date, "$options": "i"}})
+        .then(function (exercise) {
+        console.log(typeof req.params.date);
+        res.redirect('/activities')
+      })
+      .catch(function (err) {
+        if(err) {
+            response = {'error' : true,'message' : 'Error fetching data'};
+        } else {
+            response = {'error' : false,'message' : data}
+        }
+    })
+  })
   // .post(function (req, res) {
   //   Exercise.find({create_date: req.params.stats})
   //   .then(function(exercise) {
