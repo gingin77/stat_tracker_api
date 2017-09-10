@@ -116,7 +116,7 @@ router.route('/activities/:id')
 // console.log(tommorrow)  moment("2017-09-11T00:00:00.000")
 // console.log(yesterday)  moment("2017-09-09T00:00:00.000")
 
-router.route('/activities/bydate/created_date')
+router.route('/activities/bydate/:created_date')
   .get(function (req, res) {
     const updatedDate = tommorrow
     // console.log(req.params.dateid)
@@ -125,7 +125,7 @@ router.route('/activities/bydate/created_date')
     // console.log(convertedDate)
       // Exercise.find({
       //   create_date: {"$regex": req.params.dateid}})
-    Exercise.find({created_date: req.params.created_date},{$set: {created_date: updatedDate}})
+    Exercise.find({created_date: req.params.created_date})
       .then(function (exercise) {
         res.json(exercise)
       })
@@ -138,11 +138,8 @@ router.route('/activities/bydate/created_date')
     })
   })
 
-router.route('/activities/bydate/:date')
   .delete(function (req, res) {
-    // const datetoDelete = tommorrow
-
-    Exercise.remove({created_date: req.params.date})
+    Exercise.remove({created_date: req.params.created_date})
     // ({created_date: { "$regex": req.params.date, "$options": "i"}})
         .then(function (exercise) {
         console.log(typeof req.params.date);
