@@ -3,13 +3,11 @@ const app = express()
 const port = process.env.PORT || 3000
 const mongoose = require('mongoose')
 const Exercise = require('./models/exerciseSchema')
-
-//created model loading here
 const bodyParser = require('body-parser')
 
 // mongoose instance connection url connection
-// mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost/exercisedb')
+mongoose.Promise = global.Promise
+mongoose.connect('mongodb://localhost/Tododb')
 
 
 app.use(function (req, res) {
@@ -19,17 +17,11 @@ app.use(function (req, res) {
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-// app.use(session({
-//   secret: 'something',
-//   resave: false,
-//   saveUninitialized: true
-// }))
+const routes = require('./routes/activities')
+routes(app)//register the route
 
-// const routes = require('./routes/stat_trackerRoutes') //importing route
-const activitiesRouter = require('./routes/activities')
-const statsRouter = require('./routes/stats')
-activitiesRouter(app)//register the route
-statsRouter(app)
+// const statsRouter = require('./routes/stats')
+// statsRouter(app)
 
 // app.use('/activities', activitiesRouter)
 // app.use('/stats', statsRouter)

@@ -1,6 +1,9 @@
-const mongoose = require('mongoose')
+'use strict'
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+// const mongoose = require('mongoose')
 
-const exerciseSchema = new mongoose.Schema({
+const exerciseSchema = new Schema({
   exercises: {
     type: String
   },
@@ -18,5 +21,5 @@ const exerciseSchema = new mongoose.Schema({
   }
 })
 
-const Exercise = mongoose.model('Exercise', exerciseSchema)
-module.exports = Exercise
+
+module.exports = mongoose.model('Exercise', exerciseSchema)

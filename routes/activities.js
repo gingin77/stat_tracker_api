@@ -1,18 +1,17 @@
-const express = require('express')
-const app = express()
-
-const router = express.Router({mergeParams: true})
-
+'use strict'
 module.exports = function (app) {
-  const exercises = require('../controllers/stat_trackerController')
+  const exerciseList = require('../controllers/stat_trackerController')
 
-  // todoList Routes
-  app.route('/')
-    .get (exercises.list_all_exercises)
-    .post (exercises.create_a_new_exercise_log)
+  //Routes
+  app.route('/activities')
+    .get (exerciseList.list_all_exercises)
+    .post (exerciseList.create_a_new_exercise_log)
 
-  app.route('/:id')
-    .get (exercises.read_an_exercise)
-    .put (exercises.update_an_exercise)
-    .delete (exercises.delete_an_exercise)
+  app.route('/activities/:id')
+    .get (exerciseList.read_an_exercise)
+    .put (exerciseList.update_an_exercise)
+    .delete (exerciseList.delete_an_exercise)
+
+  // app.route('/stats')
+  //   .delete (exerciseList.list_all_exerciseList)
 }
