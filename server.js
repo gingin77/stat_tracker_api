@@ -74,9 +74,10 @@ router.route('/activities/:id')
         weight_level_lbs: req.body.weight_level_lbs,
         reps: req.body.reps,
         sets: req.body.sets,
-        create_date: req.body.create_date
+        created_date: moment()
       }
       console.log(updatedActivity)
+      console.log(typeof updatedActivity.create_date)
       Exercise.updateOne({_id: req.params.id}, updatedActivity)
         .then(function(exercise) {
           res.json(exercise)

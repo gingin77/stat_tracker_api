@@ -4,8 +4,8 @@ require('mongoose-moment')(mongoose)
 
 mongoose.connect('mongodb://localhost:27017/exercisesdb')
 const mongoSchema = mongoose.Schema
-// const moment = require('moment')
-// moment().format()
+const moment = require('moment')
+moment().format()
 
 
 const exerciseSchema = ({
@@ -29,7 +29,7 @@ const exerciseSchema = ({
   },
   created_date: {
      type: Date,
-     default: Date.now
+     default: moment()
    },
 })
 
