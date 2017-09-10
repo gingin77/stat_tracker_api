@@ -94,7 +94,37 @@ router.route('/activities/:id')
           }
         })
     })
+// The 2nd to last route says the following, which doesn't make sense to me:
 
+// POST	/activities/{id}/stats	Add tracked data for a day. The data sent with this should include the day tracked. You can also override the data for a day already recorded.
+
+// It seems the above route is indicating that you would be recalling a specific activity (because id is part of the route) based on the stats. Since the id is unique, I don't see how this would be useful.
+
+// Instead, I'm going to try setting up a route that allows a user to call up all activities from a given days and make copies.
+
+router.route('/activities/bydate/:create_date')
+  .get(function (req, res) {
+    console.log(req.params.create_date)
+      Exercise.find({create_date: req.params.create_date})
+      .then(function (exercise) {
+        console.log(req.params.create_date)
+        res.json(exercise)
+      })
+      .catch(function (err) {
+        if(err) {
+            response = {'error' : true,'message' : 'Error fetching data'};
+        } else {
+            response = {'error' : false,'message' : data}
+        }
+    })
+  })
+
+  // .post(function (req, res) {
+  //   Exercise.find({create_date: req.params.stats})
+  //   .then(function(exercise) {
+  //     res.json(exercise)
+  //   })
+  // })
 
 
 app.use('/', router)
