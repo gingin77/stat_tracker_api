@@ -5,12 +5,19 @@ const router = express.Router()
 const port = process.env.PORT || 3000
 const mongoose = require('mongoose')
 const Exercise = require('./models/exerciseSchema')
+const moment = require('moment')
+
+moment().format()
+const now = moment()
+const today = moment().startOf('day')
+const yesterday = moment(today).add(-1, 'days')
+const tommorrow = moment(today).add(1, 'days')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 router.get('/', function(req,res){
-  res.json({
+    res.json({
     "error": false,
     "message": "Hello World"})
 })
@@ -102,10 +109,20 @@ router.route('/activities/:id')
 
 // Instead, I'm going to try setting up a route that allows a user to call up all activities from a given days and make copies.
 
-router.route('/activities/bydate/:exercise_activity')
+// I've set up moment. the variables I set log as follows:
+// console.log(today)  moment("2017-09-10T00:00:00.000")
+// console.log(tommorrow)  moment("2017-09-11T00:00:00.000")
+// console.log(yesterday)  moment("2017-09-09T00:00:00.000")
+
+router.route('/activities/bydate')
   .get(function (req, res) {
-    console.log(req.params.exercise_activity)
-      Exercise.find({exercise_activity: { "$regex": req.params.exercise_activity, "$options": "i"}})
+    // console.log(req.params.create_date)
+      Exercise.find({
+        create_date: {
+          $gte: yesterday.toDate(),
+          $lt: tommorrow.toDate()
+        }
+      })
       .then(function (exercise) {
         // console.log(req.params.create_date)
         res.json(exercise)
