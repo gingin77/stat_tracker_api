@@ -2,6 +2,9 @@
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost:27017/exercisesdb')
 const mongoSchema = mongoose.Schema
+const moment = require('moment')
+moment().format()
+
 
 const exerciseSchema = ({
   exercise_activity: {
@@ -23,7 +26,7 @@ const exerciseSchema = ({
     type: Number
   },
   create_date: {
-    type: Date,
+    type: Date.toDateString,
     default: Date.now
   }
 })
