@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const router = express.Router()
 const port = process.env.PORT || 3000
 const mongoose = require('mongoose')
-const Exercise = require('./models/exerciseSchema')
+const mongoOp = require('./models/exerciseSchema')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -15,13 +15,45 @@ router.get('/', function(req,res){
     "message": "Hello World"})
 })
 
+router.route("/activities")
+
+    .get(function(req,res){
+        var response = {}
+        mongoOp.find({},function(err,data){
+        // Mongo command to fetch all data from collection.
+            if(err) {
+                response = {"error" : true,"message" : "Error fetching data"};
+            } else {
+                response = {"error" : false,"message" : data}
+            }
+            res.json(response)
+        })
+    })
+
+    .post(function(req,res){
+      var db = new mongoOp()
+      var response = {}
+      // db.exercise_activity = req.body.exercise_activity
+      // db.distance_miles = req.body.distance_miles
+      db = req.body
+      console.log(db)
+      db.save(function (err) {
+        if(err) {
+              response = {'error': true, 'message': 'Error adding data'}
+          } else {
+              response = {"error" : false,"message" : "Data added"}
+        }
+        res.json(response)
+    })
+})
+
 app.use('/', router)
 
-// // mongoose instance connection url connection
+// mongoose instance connection url connection
 // mongoose.Promise = global.Promise
-// mongoose.connect('mongodb://localhost/Tododb')
-//
-//
+mongoose.connect('mongodb://localhost:27017/exercisesdb')
+
+
 // app.use(function (req, res) {
 //   res.status(404).send({url: req.originalUrl + ' not found'})
 // })

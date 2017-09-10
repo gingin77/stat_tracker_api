@@ -1,25 +1,31 @@
-'use strict'
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-// const mongoose = require('mongoose')
+// 'use strict'
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/exercisesdb')
+const mongoSchema = mongoose.Schema
 
-const exerciseSchema = new Schema({
-  exercises: {
+const exerciseSchema = ({
+  exercise_activity: {
     type: String
   },
-  stats: {
-    type: [{
-      distance: Number, /* ie number of miles (use measure field) */
-      level: Number,
-      reps: Number, /* ie number of */
-      measure: String /* ie miles or pounds */
-    }]
+  distance_miles: {
+    type: Number
+  }, /* ie number of miles (use measure field) */
+  mins_per_mile: {
+    type: Number
+  },
+  weight_level: {
+    type: Number
+  },
+  reps: {
+    type: Number
+  },
+  sets: {
+    type: Number
   },
   create_date: {
     type: Date,
     default: Date.now
   }
 })
-
 
 module.exports = mongoose.model('Exercise', exerciseSchema)
