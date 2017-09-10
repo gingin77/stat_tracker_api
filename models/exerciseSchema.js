@@ -13,7 +13,7 @@ const exerciseSchema = ({
   mins_per_mile: {
     type: Number
   },
-  weight_level: {
+  weight_level_lbs: {
     type: Number
   },
   reps: {

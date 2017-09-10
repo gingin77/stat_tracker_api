@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const router = express.Router()
 const port = process.env.PORT || 3000
 const mongoose = require('mongoose')
-const mongoOp = require('./models/exerciseSchema')
+const Exercise = require('./models/exerciseSchema')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -15,37 +15,50 @@ router.get('/', function(req,res){
     "message": "Hello World"})
 })
 
-router.route("/activities")
-
-    .get(function(req,res){
+router.route('/activities')
+    .get(function (req, res) {
         var response = {}
-        mongoOp.find({},function(err,data){
+        Exercise.find({},function(err,data){
         // Mongo command to fetch all data from collection.
             if(err) {
-                response = {"error" : true,"message" : "Error fetching data"};
+                response = {'error' : true,'message' : 'Error fetching data'};
             } else {
-                response = {"error" : false,"message" : data}
+                response = {'error' : false,'message' : data}
             }
             res.json(response)
         })
     })
 
     .post(function(req,res){
-      var db = new mongoOp()
-      var response = {}
-      // db.exercise_activity = req.body.exercise_activity
-      // db.distance_miles = req.body.distance_miles
-      db = req.body
-      console.log(db)
-      db.save(function (err) {
+      Exercise.create(req.body)
+      .then(function(exercise) {
+        res.redirect('/activities')
+      })
+      .catch(function (err) {
         if(err) {
-              response = {'error': true, 'message': 'Error adding data'}
-          } else {
-              response = {"error" : false,"message" : "Data added"}
+            response = {'error' : true,'message' : 'Error fetching data'};
+        } else {
+            response = {'error' : false,'message' : data}
         }
-        res.json(response)
+      })
     })
-})
+
+router.route('/activities/:id')
+    .get(function (req, res) {
+      Exercise.findOne({_id: req.params.id})
+      .then(function(exercise) {
+        res.json(exercise)
+      })
+      .catch(function (err) {
+        if(err) {
+            response = {'error' : true,'message' : 'Error fetching data'};
+        } else {
+            response = {'error' : false,'message' : data}
+        }
+      })
+
+    })
+
 
 app.use('/', router)
 
