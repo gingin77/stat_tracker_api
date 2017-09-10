@@ -102,12 +102,12 @@ router.route('/activities/:id')
 
 // Instead, I'm going to try setting up a route that allows a user to call up all activities from a given days and make copies.
 
-router.route('/activities/bydate/:create_date')
+router.route('/activities/bydate/:exercise_activity')
   .get(function (req, res) {
-    console.log(req.params.create_date)
-      Exercise.find({create_date: req.params.create_date})
+    console.log(req.params.exercise_activity)
+      Exercise.find({exercise_activity: { "$regex": req.params.exercise_activity, "$options": "i"}})
       .then(function (exercise) {
-        console.log(req.params.create_date)
+        // console.log(req.params.create_date)
         res.json(exercise)
       })
       .catch(function (err) {
