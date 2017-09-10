@@ -1,9 +1,11 @@
 // 'use strict'
 const mongoose = require('mongoose')
+require('mongoose-moment')(mongoose)
+
 mongoose.connect('mongodb://localhost:27017/exercisesdb')
 const mongoSchema = mongoose.Schema
-const moment = require('moment')
-moment().format()
+// const moment = require('moment')
+// moment().format()
 
 
 const exerciseSchema = ({
@@ -25,10 +27,8 @@ const exerciseSchema = ({
   sets: {
     type: Number
   },
-  create_date: {
-    type: Date,
-    default: Date.now
-  }
+  create_date:
+    'Moment'
 })
 
 module.exports = mongoose.model('Exercise', exerciseSchema)
