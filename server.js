@@ -7,12 +7,6 @@ const mongoose = require('mongoose')
 const Exercise = require('./models/exerciseSchema')
 const moment = require('moment')
 
-moment().format()
-const now = moment()
-const today = moment().startOf('day')
-const yesterday = moment(today).add(-1, 'days')
-const tommorrow = moment(today).add(1, 'days')
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -106,6 +100,12 @@ router.route('/activities/:id')
 // It seems the above route is indicating that you would be recalling a specific activity (because id is part of the route) based on the stats. Since the id is unique, I don't see how this would be useful.
 
 // Instead, I'm going to try setting up a route that allows a user to call up all activities from a given days and make copies.
+
+moment().format()
+const now = moment()
+const today = moment().startOf('day')
+const yesterday = moment(today).add(-1, 'days')
+const tommorrow = moment(today).add(1, 'days')
 
 // I've set up moment. the variables I set log as follows:
 // console.log(today)  moment("2017-09-10T00:00:00.000")
